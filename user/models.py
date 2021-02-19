@@ -51,7 +51,7 @@ class User(AbstractUser):
         max_digits=8, decimal_places=2,
         default=Decimal(0)
     )
-    phone_number = models.CharField(max_length=50) # @todo validator
+    phone_number = models.CharField(max_length=50)  # @todo validator
 
     objects = UserManager()
     USERNAME_FIELD = 'email'

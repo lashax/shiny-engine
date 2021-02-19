@@ -6,4 +6,11 @@
     {{ form }}
     <input type="submit">
     </form>
+
+    <p>{{ user.first_name }}, in the current week you ordered {{ stats.0 }} tickets,
+    which costs {{ stats.3 }} Lari.</p>
+    <p>In the current month you ordered {{ stats.1 }} tickets,
+    which costs {{ stats.4 }} Lari.</p>
+    <p>In the current year you ordered {{ stats.2 }} tickets,
+    which costs {{ stats.5 }} Lari.</p>
 {% endblock %}

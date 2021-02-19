@@ -6,4 +6,4 @@ from ecommerce.models import Order
 class OrderTicket(ModelForm):
     class Meta:
         model = Order
-        fields = ['start_time', 'end_time']
+        fields = ['name', 'start_time', 'end_time']
