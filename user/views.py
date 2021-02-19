@@ -6,11 +6,15 @@ from user.forms import UserRegistrationForm
 
 
 def register(request: WSGIRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
+    if not request.user:
+        if request.method == 'POST':
+            form = UserRegistrationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('login')
+        else:
+            form = UserRegistrationForm()
+        return render(request, 'user/register.html', {'form': form})
     else:
-        form = UserRegistrationForm()
-    return render(request, 'user/register.html', {'form': form})
+        return redirect('home')
+

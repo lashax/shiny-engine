@@ -14,6 +14,7 @@ from .view_helpers import generate_hash
 TICKET_PRICE = 20
 
 
+@login_required()
 def home(request: WSGIRequest) -> HttpResponse:
     week = Order.objects.filter(order_time__week=
                                 datetime.now().isocalendar()[1],
