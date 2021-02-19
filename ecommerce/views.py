@@ -9,12 +9,12 @@ from django.shortcuts import render, redirect
 from ecommerce.forms import OrderTicket
 from .models import Ticket, Order
 from .view_helpers import generate_hash
-
+from .view_helpers.tickets_query import get_ticket_queryset
 
 TICKET_PRICE = 20
 
 
-@login_required()
+@login_required
 def home(request: WSGIRequest) -> HttpResponse:
     week = Order.objects.filter(order_time__week=
                                 datetime.now().isocalendar()[1],
@@ -50,10 +50,21 @@ def home(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 def tickets(request: WSGIRequest) -> HttpResponse:
-    paginator = Paginator(Ticket.objects.all(), 3,
+    context = {}
+
+    query_set = Order.objects.filter(user=request.user)
+
+    # Check if user has searched for something
+    if request.GET.get('q'):
+        query = request.GET.get('q')
+        query_set = get_ticket_queryset(query, request.user)
+        context['query'] = query
+
+    paginator = Paginator(query_set, 3,
                           allow_empty_first_page=True)
     page_number = request.GET.get('page')
     ticket_page = paginator.get_page(page_number)
 
-    return render(request, 'ecommerce/tickets.html',
-                  {'ticket_page': ticket_page})
+    context['ticket_page'] = ticket_page
+
+    return render(request, 'ecommerce/tickets.html', context=context)

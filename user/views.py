@@ -6,7 +6,7 @@ from user.forms import UserRegistrationForm
 
 
 def register(request: WSGIRequest) -> HttpResponse:
-    if not request.user:
+    if not request.user.is_authenticated:
         if request.method == 'POST':
             form = UserRegistrationForm(request.POST)
             if form.is_valid():

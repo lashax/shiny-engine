@@ -1,16 +1,26 @@
 {% extends 'ecommerce/base.html' %}
 
 {% block body %}
-    <div style="margin-top: 0px">
-        {% for ticket in ticket_page %}
-            <div style="margin-bottom: 40px">
-                <p>Ticket name: {{ ticket.name }}</p>
-                <p>Ticket start date: {{ ticket.start_time }}</p>
-                <p>Ticket end date: {{ ticket.end_time }}</p>
-                <p>Ticket hash: {{ ticket.hash_code }}</p>
-            </div>
-        {% endfor %}
+    <div>
+        <form>
+            <input type="text" name="q" placeholder="Search..."
+                   value="{{ request.GET.q }}">
+            <input type="submit" value="Submit">
+        </form>
     </div>
+
+    {% if ticket_page %}
+        <div style="margin-top: 0px">
+            {% for ticket in ticket_page %}
+                <div style="margin-bottom: 40px">
+                    <p>Ticket name: {{ ticket.name }}</p>
+                    <p>Ticket start date: {{ ticket.start_time }}</p>
+                    <p>Ticket end date: {{ ticket.end_time }}</p>
+                    <p>Ticket hash: {{ ticket.hash_code }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
     <div class="pagination">
     <span class="step-links">
         {% if ticket_page.has_previous %}
@@ -25,5 +35,10 @@
             <a href="?page={{ ticket_page.next_page_number }}">next</a>
         {% endif %}
     </span>
-</div>
+    </div>
+
+    {% else %}
+        <p>No result found for "{{ query }}"</p>
+    {% endif %}
+
 {% endblock %}
