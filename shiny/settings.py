@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'ecommerce.apps.EcommerceConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,4 +123,4 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'user.User'
 
-LOGIN_REDIRECT_URL = ''  # @todo
+LOGIN_REDIRECT_URL = 'home'
